@@ -1,0 +1,13 @@
+# argument is format grepable of nmap
+#!/bin/bash
+
+file=$1
+
+echo "[+] Extracting ports..."
+
+output=$(cat $file | grep "Ports" | sed 's/ /,/g' | awk '{print $2}' | grep -oP ",.*?/" | xargs | tr -d ",|/" | sed 's/ /,/g')
+
+echo $output | tr -d '\n' | xclip -sel clip
+
+echo "[+] Ports copied to clipboard"
+
